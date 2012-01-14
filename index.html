@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Frameworks em JS - Herberth Amaral</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <link rel="stylesheet" href="js/deck.js/core/deck.core.css">
+        <link rel="stylesheet" href="js/deck.js/extensions/goto/deck.goto.css">
+        <link rel="stylesheet" href="js/deck.js/extensions/menu/deck.menu.css">
+        <link rel="stylesheet" href="js/deck.js/extensions/navigation/deck.navigation.css">
+        <link rel="stylesheet" href="js/deck.js/extensions/status/deck.status.css">
+        <link rel="stylesheet" href="js/deck.js/extensions/hash/deck.hash.css">
+	
+	<!-- Theme CSS files (menu swaps these out) -->
+	<link rel="stylesheet" id="style-theme-link"      href="js/deck.js/themes/style/web-2.0.css">
+	<link rel="stylesheet" id="transition-theme-link" href="js/deck.js/themes/transition/horizontal-slide.css">
+        <link rel="stylesheet" href="css/font/stylesheet.css" />
+        <link rel="stylesheet" href="js/syntaxhighlighter_3.0.83/styles/shCoreDefault.css" />
+        <style type="text/css" media="screen">
+            h1.fontface 
+            {
+                font: 80px/88px 'DistantGalaxyRegular', Arial, sans-serif !important;
+                letter-spacing: 1;
+                text-align:center;
+            }
+            h2{}
+            p.bottom {}
+            small { font-size:26px;}
+        </style>
+    </head>
+    <body class="deck-container">
+        <section class="slide">
+            <h1 class="fontface">Frameworks MVC/MVVM em JavaScript</h1>
+            <h2 style="text-align:center;margin-top:600px;">
+                <a href="http://twitter.com/HerberthAmaral">@HerberthAmaral</a>
+            </h2>
+        </section>
+        <section class="slide">
+            <h2>O início</h2>
+            <ul>
+                <li class="slide">API de acesso ao DOM era <strong>horrível</strong></li>
+            	<li class="slide">Quem é que não lembra do famoso document.getElementById()?</li>
+            	<li class="slide">E do document.forms?</li>
+            	<li class="slide">Escrever JavaScript era chato.</li>
+            </ul>
+            <div class="slide">
+                <img src="imgs/bored.jpg"/>
+                <p style="text-align:center !important;"><em>Oh God, mais um formulário pra validar...</em></p>
+            </div>
+        </section>
+        <section class="slide" data-x="1000">
+            <h2>~le js libz~</h2>
+            <ul>
+                <li>jQuery, Mootools, Prototype, YUI ao resgate!</li>
+            	<li class="slide">APIs limpas, manipulação de DOM para todos.</li>
+            	<li class="slide">"Baterias" extras, como efeitos, animações, AJAX.</li>
+            </ul>
+            <div class="slide">
+                <img src="imgs/sweetjesus.jpg"/>
+                <p style="text-align:center !important;"><em>Sweet Jesus, I love jQuery.</em></p>
+            </div>
+        </section>
+        <section class="slide" data-x="2000">
+            <h2>Mas...</h2>
+            <ul>
+                <li>Essas libs são ótimas no <strong>acesso à DOM</strong></li>
+                <li>Elas não dizem como você deve <strong>organizar sua app</strong></li>
+                <li>O acesso à DOM melhorou, mas ainda temos uma abordagem <strong>orientada à eventos</strong></li>
+            </ul>
+            <div class="slide">
+                <pre class="brush: js;">
+$(document).ready(function(){
+    $('form').submit(function(){
+        $('form').hide();
+        $('#uploading').show();
+    }).find('input[type=checkbox][name=is_on_twitter]').change(function(){
+        if($(this).is(':checked')){
+            $(this).parent().find('span.is_on_twitter').hide();
+        }
+        else{
+            $(this).parent().find('span.is_on_twitter').show();
+        }
+    });
+    $('button.add').click(function(){
+        $('ul.persons').append('...');
+    });
+});
+                </pre>
+            </div>
+        </section>
+        <section class="slide" data-x="3000">
+            <p style="margin-top:60px;">
+                <img src="imgs/ohgod.png" width="420" height="530"/>
+            </p>
+        </section>
+        <section class="slide">
+            <h2>Créditos das fotos</h2>
+            <ul>
+                <li>http://www.flickr.com/photos/9036026@N08/3010859705/</li>
+            </ul>
+        </section>
+        <script type="text/javascript" src="js/jquery.js"></script>
+        <script src="js/deck.js/core/deck.core.js"></script>
+        <script src="js/deck.js/extensions/hash/deck.hash.js"></script>
+        <script src="js/deck.js/extensions/menu/deck.menu.js"></script>
+        <script src="js/deck.js/extensions/goto/deck.goto.js"></script>
+        <script src="js/deck.js/extensions/status/deck.status.js"></script>
+        <script src="js/deck.js/extensions/navigation/deck.navigation.js"></script>
+        <script src="js/deck.js/modernizr.custom.js"></script>
+        <script type="text/javascript" src="js/syntaxhighlighter_3.0.83/scripts/shCore.js"></script>
+        <script type="text/javascript" src="js/syntaxhighlighter_3.0.83/scripts/shBrushJScript.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $.deck('.slide');
+            });
+        </script>
+    </body>
+</html>
+
