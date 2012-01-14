@@ -62,9 +62,9 @@
         <section class="slide" data-x="2000">
             <h2>Mas...</h2>
             <ul>
-                <li>Essas libs são ótimas no <strong>acesso à DOM</strong></li>
-                <li>Elas não dizem como você deve <strong>organizar sua app</strong></li>
-                <li>O acesso à DOM melhorou, mas ainda temos uma abordagem <strong>orientada à eventos</strong></li>
+                <li class="slide">Essas libs são ótimas no <strong>acesso à DOM</strong></li>
+                <li class="slide">Elas não dizem como você deve <strong>organizar sua app</strong></li>
+                <li class="slide">O acesso à DOM melhorou, mas ainda temos uma abordagem <strong>orientada à eventos</strong></li>
             </ul>
             <div class="slide">
                 <pre class="brush: js;">
@@ -93,9 +93,35 @@ $(document).ready(function(){
             </p>
         </section>
         <section class="slide">
-            <h2>Créditos das fotos</h2>
+            <h2>Algumas implicações.</h2>
+            <ul>
+                <li class="slide">Código macarrônico;</li>
+                <li class="slide">Complexidade/manutenabilidade do código cresce em proporção <strong>geométrica</strong> enquanto a
+                complexidade das interações cresce em proporção <strong>aritimética</strong>;</li>
+                <li class="slide">Número gigantesco de <strong>WTF/min</strong> (métrica internacionalmente conhecida para avaliação de
+                qualidade de código);</li>
+                <li class="slide">Testabilidade <strong>seriamente</strong> comprometida.</li>
+            </ul>
+        </section>
+        <section class="slide">
+            <h2>E se...</h2>
+            <ul>
+                <li class="slide">Pudéssemos ter uma melhor <strong>SoC?</strong></li>
+                <li class="slide">Pudéssemos escrever <strong>regras de interação</strong> sem mexer com o DOM?</li>
+                <li class="slide">Pudéssemos mudar o paradigma <strong>event-driven</strong> para <strong>data-driven?</strong></li>
+                <li class="slide">Pudéssemos <strong>testar o comportamento</strong> da nossa interface sem fixtures em HTML?</li>
+            </ul>
+        </section>
+        <section class="slide">
+            <p style="margin-top:120px;">
+                <img src="imgs/yeswecan.jpg" alt="Yes, we can!" />
+            </p>
+        </section>
+        <section class="slide">
+            <h2>Créditos das imagens</h2>
             <ul>
                 <li>http://www.flickr.com/photos/9036026@N08/3010859705/</li>
+                <li>http://www.flickr.com/photos/joecrimmings/2238699461/</li>
             </ul>
         </section>
         <script type="text/javascript" src="js/jquery.js"></script>
