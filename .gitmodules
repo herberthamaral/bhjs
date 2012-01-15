@@ -1,0 +1,3 @@
+[submodule "js/deck.js/extensions/deck.ks-codemirror"]
+	path = js/deck.js/extensions/deck.ks-codemirror
+	url = https://github.com/iros/deck.js-codemirror.git
