@@ -10,12 +10,13 @@
         <link rel="stylesheet" href="js/deck.js/extensions/status/deck.status.css">
         <link rel="stylesheet" href="js/deck.js/extensions/hash/deck.hash.css">
 	
-	<!-- Theme CSS files (menu swaps these out) -->
-	<link rel="stylesheet" id="style-theme-link"      href="js/deck.js/themes/style/web-2.0.css">
-	<link rel="stylesheet" id="transition-theme-link" href="js/deck.js/themes/transition/horizontal-slide.css">
+        <!-- Theme CSS files (menu swaps these out) -->
+        <link rel="stylesheet" id="style-theme-link"      href="js/deck.js/themes/style/web-2.0.css">
+        <link rel="stylesheet" id="transition-theme-link" href="js/deck.js/themes/transition/horizontal-slide.css">
+        <link rel="stylesheet" href="js/deck.js/extensions/deck.js-codemirror/deck.codemirror.css">
+        <link rel="stylesheet" href="js/deck.js/extensions/deck.js-codemirror/themes/default.css">
         <link rel="stylesheet" href="css/font/stylesheet.css" />
-        <link rel="stylesheet" href="js/syntaxhighlighter_3.0.83/styles/shCoreDefault.css" />
-        <style type="text/css" media="screen">
+        <style type="text/css">
             h1.fontface 
             {
                 font: 80px/88px 'DistantGalaxyRegular', Arial, sans-serif !important;
@@ -25,6 +26,8 @@
             h2{}
             p.bottom {}
             small { font-size:26px;}
+            table { width:100%; }
+            tr>td:last-child{ padding: 4px 4px 4px 4px;font-weight:bold; margin: 5px 5px 5px 5px; text-align:right;}
         </style>
     </head>
     <body class="deck-container">
@@ -67,7 +70,7 @@
                 <li class="slide">O acesso à DOM melhorou, mas ainda temos uma abordagem <strong>orientada à eventos</strong></li>
             </ul>
             <div class="slide">
-                <pre class="brush: js;">
+                <textarea class="code" mode="javascript" style="display:none" runnable="true">
 $(document).ready(function(){
     $('form').submit(function(){
         $('form').hide();
@@ -84,7 +87,7 @@ $(document).ready(function(){
         $('ul.persons').append('...');
     });
 });
-                </pre>
+                </textarea>
             </div>
         </section>
         <section class="slide" data-x="3000">
@@ -118,6 +121,266 @@ $(document).ready(function(){
             </p>
         </section>
         <section class="slide">
+            <h2>Backbone.js</h2>
+            <ul>
+                <li class="slide"><em>Lembra</em> um MVC (não há na documentação algo que fale que o Backbone é um MVC);</li>
+                <li class="slide">Views, Models, Collections e Routers (<em>lembra</em> um controller);</li>
+                <li class="slide">Integra nativamente com o Rails (RESTful API), mas pode integrar com qualquer app com um pouco de
+                configuração.</li>
+            </ul>
+        </section>
+        <section class="slide">
+            <h2>Como o Backbone.js me ajuda?</h2>
+            <ul>
+                <li class="slide">"Alivia" um pouco o event-driven programming;</li>
+                <li class="slide">Mudanças nos models são automaticamente sincronizadas no DOM;</li>
+                <li class="slide">Convenção estrutural: o Backbone já vem com uma;</li>
+                <li class="slide">Testabilidade <em>facilitada</em>.</li>
+            </ul>
+        </section>
+        <section class="slide">
+            <div style="margin-top:60px;">
+                <img src="imgs/backbone_estrutura.png"/>
+                <p style="text-align:center !important;">*Note que os models são independentes.</p>
+            </div>
+        </section>
+        <section class="slide">
+            <h2>Backbone - Routers</h2>
+            <textarea class="code" mode="javascript" style="display:none">
+var Workspace = Backbone.Router.extend({
+  routes: {
+    "help":                 "help",    // #help
+    "search/:query":        "search",  // #search/kiwis
+    "search/:query/p:page": "search"   // #search/kiwis/p7
+  },
+  help: function() {
+    ...
+  },
+  search: function(query, page) {
+    ...
+  }
+});
+            </textarea>
+            <ul>
+            	<li class="slide">URLs também fazem parte da UI!</li>
+            	<li class="slide">Navegabilidade fácil, sem reload (e sem necessariamente AJAX);</li>
+                <li class="slide">Routing + Controllers do Rails -- URLs + Views do Django;</li>
+                <li class="slide"><strong>help</strong> e <strong>search</strong> podem consultar collections, fazer fetch em
+                models e renderizar views;</li>
+                <li class="slide">Funciona de forma <strong>desacoplada</strong> do Backbone, podendo ser utilizado com outros
+                frameworks tranquilamente.</li>
+            </ul>
+        </section>
+        <section class="slide">
+            <h2>Backbone - Events</h2>
+            <textarea class="code" mode="javascript" style="display:none" runnable="true" globals="$,Backbone,_">
+var object = {};
+_.extend(object, Backbone.Events);
+object.bind("alert", function(msg) {
+  alert("Triggered " + msg);
+});
+object.trigger("alert", "an event");
+            </textarea>
+            <ul>
+            	<li class="slide">Boa parte da comunicação entre objetos no Backbone é feita através de eventos;</li>
+                <li class="slide">Quase toda ação(ex. salvar um model, mudar uma propriedade) resulta num disparo de 
+                evento, que pode ser tratado ou ignorado;</li>
+            	<li class="slide">Forma conveniente de desacoplar aplicação.</li>
+            </ul>
+        </section>
+        <section class="slide">
+            <h2>Backbone - Models</h2>
+            <textarea class="code" mode="javascript" style="display:none" runnable="true" globals="$,Backbone,_">
+var Produto = Backbone.Model.extend({
+     defaults:{
+        nome:'',
+        preco: 0.0,
+        estoque: 0
+    },
+    validate: function(attrs){
+        var err = "";
+        if (attrs.nome !== undefined && attrs.nome == ''){
+            err = "Nome não pode ser vazio";
+        }
+        else if (attrs.preco !== undefined && isNaN(parseFloat(attrs.preco))){
+            var err = "Valor inválido pra preço";
+        }
+        console.log(err);
+        return err;
+    }
+});
+var p = new Produto();
+p.set({preco:'Alvejante'});
+p.save();
+    </textarea>
+        <ul>
+            <li class="slide"><strong>get</strong> e <strong>set</strong> - Obtém/muda propriedades e dispara eventos
+            quando necessário;</li>
+            <li class="slide">O método <strong>validate</strong> é chamado antes do <strong>set</strong> e antes do
+            <strong>save</strong> e o parâmetro <strong>attrs</strong> contém os dados que irão mudar. Um evento
+            <strong>error</strong> é disparado em caso de erro de validação;</li>
+            <li class="slide"><strong>set</strong> retorna a própria instância (<strong>this</strong>) caso os dados
+            tenham passado na validação e <strong>false</strong> caso contrário.</li> 
+        	<li class="slide">Um segundo parâmetro de opções pode ser passado pro set. É possível passar um callback
+            <strong>error</strong> que será chamado se a validação falhar.</li>
+        </ul>
+        </section>
+        <section class="slide">
+        	<h2>Backbone - Collections</h2>
+            <textarea class="code" mode="javascript" style="display:none" runnable="true" globals="$,Backbone,_">
+var Produto = Backbone.Model.extend({});
+var ProdutoCollection  = Backbone.Collection.extend({
+    model: Produto,
+    url: '/produtos',
+});
+var produtos = new ProdutoCollection();
+produtos.fetch(); //obtem produtos do servidor ou do armazenamento local
+produtos.add(new Produto({'nome':'Alvejante', 'preco':5.61}));
+produtos.add(new Produto({'nome':'Vassoura', 'preco':8.90}));
+produtos.add(new Produto({'nome':'Escova', 'preco':15.20}));
+console.log(JSON.stringify(produtos.filter(function(obj){ return obj.get('preco')>6})));
+            </textarea>
+        	<ul>
+        		<li class="slide">Conjunto ordenado de models.</li>
+        		<li class="slide">Possível fazer "consultas" com a ajuda do Underscore.js;</li>
+        		<li class="slide">Carregamento de objetos do server em massa (com o fetch);</li>
+                <li class="slide">Delega para o <strong>Backbone.sync</strong> o trabalho de persistência. Dessa forma,
+                pode-se usar persistência local, remota (padrão, pré-habilitada) ou ambos.</li>
+        	</ul>
+        </section>
+        <section class="slide">
+        	<h2>Backbone - Views</h2>
+            <textarea class="code" mode="javascript" style="display:none" runnable="true" globals="$,Backbone,_">
+var DocumentRow = Backbone.View.extend({
+    tagName: "li",
+    className: "document-row",
+    events: {
+        "click .icon":          "open",
+        "click .button.edit":   "openEditDialog",
+        "click .button.delete": "destroy"
+    },
+    initialize:function(){
+        _.bindAll(this, "render");
+        this.model.bind('change', this.render);
+    }
+    render: function() {
+        //...
+    },
+    open: function(){
+        //...
+    },
+    openEditDialog: function(){
+        //...
+    },
+    destroy: function(){
+        //...
+    }
+});
+            </textarea>
+        	<ul>
+        		<li class="slide">Não há muita coisa de especial numa view. É mais uma convenção do que uma entidade
+                realmente necessária;</li>
+        		<li class="slide">Uma view geralmente está atrelada a um ou mais models;</li>
+                <li class="slide">Pode renderizar-se automaticamente quando o model muda
+                (<strong>this.model.bind('change', this.render())</strong>);</li>
+        		<li class="slide">Vinculação de sentido único (one way binding -- do model para a view) por padrão.</li>
+        	</ul>
+        </section>
+        <section class="slide">
+            <h2>Backbone - Prós</h2>
+            <ul>
+            	<li>Comunidade grande e ativa;</li>
+            	<li>Integração nativa com o Rails;</li>
+            	<li>Flexível: você pode usar somente o que precisa;</li>
+            	<li>Estrutura já bem difundida entre devs web;</li>
+            	<li>Core extremamente reduzido (4.6k empacotado e gzipado);</li>
+            	<li>Integra facilmente com plugins do jQuery;</li>
+            	<li>Testabilidade razoável.</li>
+            </ul>
+            <div class="slide">
+                <h2>Backbone - Contras</h2>
+                <ul>
+                	<li>Boilerplate;</li>
+                	<li>Curva de aprendizado íngreme no começo se comparado à outros Frameworks;</li>
+                	<li>Múltiplas responsabilidades nas Views e nos Models;</li>
+                    <li>O core é pequeno, mas já há duas dependências por padrão (jQuery, Underscore); E você vai 
+                    acabar usando mais outras dependências de terceiros;</li>
+                </ul>
+            </div>
+        </section>
+        <section class="slide">
+            <h2>Avaliação geral</h2>
+            <table with="100%" cellspacing="2" align="center" cellpadding="2">
+            	<tr>
+            		<th>Item</th>
+            		<th>&nbsp;</th>
+            		<th>Nota</th>
+            	</tr>
+            	<tr>
+            		<td>Facilidade de uso</td>
+            		<td>&nbsp;</td>
+            		<td>9/10</td>
+            	</tr>
+            	<tr>
+            		<td>Verbosidade</td>
+            		<td>&nbsp;</td>
+            		<td>7/10</td>
+            	</tr>
+            	<tr>
+            		<td>Facilidade de integração com backend </td>
+            		<td>&nbsp;</td>
+            		<td>9/10</td>
+            	</tr>
+            	<tr>
+                    <td>SoC</td>
+            		<td>&nbsp;</td>
+            		<td>8/10</td>
+            	</tr>
+            	<tr>
+            		<td>Suporte</td>
+            		<td>&nbsp;</td>
+            		<td>10/10</td>
+            	</tr>
+            	<tr>
+            		<td>Qualidade de documentação</td>
+            		<td>&nbsp;</td>
+            		<td>9/10</td>
+            	</tr>
+            	<tr>
+            		<td>Recursos que vem por padrão</td>
+            		<td>&nbsp;</td>
+            		<td>8/10</td>
+            	</tr>
+            	<tr>
+            		<td>Recursos com plugins</td>
+            		<td>&nbsp;</td>
+            		<td>10/10</td>
+            	</tr>
+            	<tr>
+            		<td>Comunidade</td>
+            		<td>&nbsp;</td>
+            		<td>10/10</td>
+            	</tr>
+            	<tr>
+                    <td><strong>Média geral</strong></td>
+            		<td>&nbsp;</td>
+            		<td>8.9/10</td>
+            	</tr>
+            </table>
+        </section>
+        <section class="slide">
+        	<h2>Baterias extras pro seu projeto com Backbone.js</h2>
+        	<ul>
+                <li class="slide"><a href="https://github.com/derickbailey/backbone.modelbinding">Backbone.Modelbinding </a>
+                modelbinding melhorado. Indispensável;</li>
+                <li class="slide"><a href="https://github.com/PaulUithol/Backbone-relational">Backbone relational</a> -
+                Relacionamentos um-pra-um, um-pra-muitos, muitos-pra-muitos nos seus models;</li>
+                <li class="slide"><a href="https://github.com/PaulUithol/backbone-tastypie">Backbone-tastypie</a>
+                integração com o django-tastypie.</li>
+        		<li class="slide"></li>
+        	</ul>
+        </section>
+        <section class="slide">
             <h2>Créditos das imagens</h2>
             <ul>
                 <li>http://www.flickr.com/photos/9036026@N08/3010859705/</li>
@@ -125,15 +388,21 @@ $(document).ready(function(){
             </ul>
         </section>
         <script type="text/javascript" src="js/jquery.js"></script>
+        <script type="text/javascript" src="js/underscore.js"></script>
+        <script type="text/javascript" src="js/backbone.js"></script>
         <script src="js/deck.js/core/deck.core.js"></script>
         <script src="js/deck.js/extensions/hash/deck.hash.js"></script>
         <script src="js/deck.js/extensions/menu/deck.menu.js"></script>
         <script src="js/deck.js/extensions/goto/deck.goto.js"></script>
         <script src="js/deck.js/extensions/status/deck.status.js"></script>
         <script src="js/deck.js/extensions/navigation/deck.navigation.js"></script>
+        <script src="js/deck.js/extensions/deck.js-codemirror/codemirror.js"></script>
+        <script src="js/deck.js/extensions/deck.js-codemirror/mode/javascript/javascript.js"></script>
+        <script src="js/deck.js/extensions/deck.js-codemirror/mode/xml/xml.js"></script>
+        <script src="js/deck.js/extensions/deck.js-codemirror/mode/css/css.js"></script>
+        <script src="js/deck.js/extensions/deck.js-codemirror/mode/htmlmixed/htmlmixed.js"></script>
+        <script src="js/deck.js/extensions/deck.js-codemirror/deck.codemirror.js"></script>
         <script src="js/deck.js/modernizr.custom.js"></script>
-        <script type="text/javascript" src="js/syntaxhighlighter_3.0.83/scripts/shCore.js"></script>
-        <script type="text/javascript" src="js/syntaxhighlighter_3.0.83/scripts/shBrushJScript.js"></script>
         <script type="text/javascript">
             $(document).ready(function(){
                 $.deck('.slide');
