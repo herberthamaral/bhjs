@@ -46,7 +46,7 @@
             	<li class="slide">Escrever JavaScript era chato.</li>
             </ul>
             <div class="slide">
-                <img src="imgs/bored.jpg"/>
+                <img src="imgs/bored.jpg" alt="bored"/>
                 <p style="text-align:center !important;"><em>Oh God, mais um formulário pra validar...</em></p>
             </div>
         </section>
@@ -58,7 +58,7 @@
             	<li class="slide">"Baterias" extras, como efeitos, animações, AJAX.</li>
             </ul>
             <div class="slide">
-                <img src="imgs/sweetjesus.jpg"/>
+                <img src="imgs/sweetjesus.jpg" alt="sweet jesus!"/>
                 <p style="text-align:center !important;"><em>Sweet Jesus, I love jQuery.</em></p>
             </div>
         </section>
@@ -92,7 +92,7 @@ $(document).ready(function(){
         </section>
         <section class="slide" data-x="3000">
             <p style="margin-top:60px;">
-                <img src="imgs/ohgod.png" width="420" height="530"/>
+                <img src="imgs/ohgod.png" alt="oh god, why?" width="420" height="530"/>
             </p>
         </section>
         <section class="slide">
@@ -121,6 +121,11 @@ $(document).ready(function(){
             </p>
         </section>
         <section class="slide">
+            <p style="margin-top:120px;">
+                <img src="imgs/backbone.jpg" alt="Backbone" />
+            </p>
+        </section>
+        <section class="slide">
             <h2>Backbone.js</h2>
             <ul>
                 <li class="slide"><em>Lembra</em> um MVC (não há na documentação algo que fale que o Backbone é um MVC);</li>
@@ -140,7 +145,7 @@ $(document).ready(function(){
         </section>
         <section class="slide">
             <div style="margin-top:60px;">
-                <img src="imgs/backbone_estrutura.png"/>
+                <img alt="estrutura do backbonejs" src="imgs/backbone_estrutura.png"/>
                 <p style="text-align:center !important;">*Note que os models são independentes.</p>
             </div>
         </section>
@@ -310,7 +315,7 @@ var DocumentRow = Backbone.View.extend({
         </section>
         <section class="slide">
             <h2>Avaliação geral</h2>
-            <table with="100%" cellspacing="2" align="center" cellpadding="2">
+            <table with="100%" align="center">
             	<tr>
             		<th>Item</th>
             		<th>&nbsp;</th>
@@ -377,17 +382,123 @@ var DocumentRow = Backbone.View.extend({
                 Relacionamentos um-pra-um, um-pra-muitos, muitos-pra-muitos nos seus models;</li>
                 <li class="slide"><a href="https://github.com/PaulUithol/backbone-tastypie">Backbone-tastypie</a>
                 integração com o django-tastypie.</li>
-        		<li class="slide"></li>
         	</ul>
+        </section>
+        <section class="slide">
+            <p style="margin-top:120px;">
+                <img src="imgs/anderson_kick.jpg" alt="knockout" />
+            </p>
+        </section>
+        <section class="slide">
+        	<h2>Knockout.js</h2>
+        	<ul>
+                <li class="slide">Baseado no padrão MVVM;</li>
+        		<li class="slide">Model, View, View-Model;</li>
+        		<li class="slide">Nasceu na Microsoft e é uma especialização do Presentation Model do Fowler;</li>
+        		<li class="slide">Diferente do MVC, o MVVM nasceu focado em desenvolvimento de UIs modernas, com
+                interações complexas;</li>
+                <li class="slide">ViewModel != Controller. Diferente do controller, o viewmodel <strong>não</strong>
+                sabe nada da view;</li>
+                <li class="slide">Rastreamento de dependências (dependency tracking) e propriedades observáveis
+                (observables);</li>
+        		<li class="slide">Vinculação de via dupla (two-way binding). Mude o view-model e a view mudará. Mude a
+                view e o view-model mudará. </li>
+        		<li class="slide">Escrita em JavaScript puro;</li>
+        		<li class="slide">Curva de adoção extremamente pequena; Independende da sua arquitetura atual, o ko
+                encaixa-se sem problemas;</li>
+        		<li class="slide">Escrita em JavaScript puro;</li>
+        		<li class="slide">Rastreamento de dependências bem elegante;</li>
+        		<li class="slide">Vínculos declarativos;</li>
+        	</ul>
+        </section>
+        <section class="slide">
+        	<h2>View & View-Model</h2>
+            <textarea class="code" mode="html" style="display:none" runnable="true">
+<div id="ko-exemplo1">
+    Nome: <input type="text" data-bind="value: nome" /><br/>
+    Sobrenome: <input type="text" data-bind="value: sobrenome" /><br/>
+    Twitter?: <input type="checkbox" data-bind="checked: onTwitter" />
+    <input type="text" data-bind="visible: onTwitter, value: twitter" placeholder="@username"/><br/>
+    <p>Nome completo: <span data-bind="html: nome()+sobrenome()"></span></p>
+    <button data-bind="click: submit">Enviar</button>
+</div>
+            </textarea>
+            <textarea class="code" mode="javascript" style="display:none" runnable="true" globals="ko">
+var viewModel = {
+    nome: ko.observable(''),
+    sobrenome: ko.observable(''),
+    onTwitter: ko.observable(false),
+    twitter: ko.observable(''),
+    submit: function(){
+        alert(JSON.stringify(ko.toJS(this)));
+    }.bind(this)
+};
+            </textarea>
+            <div id="ko-exemplo1">
+    Nome: <input type="text" data-bind="value: nome" /><br/>
+    Sobrenome: <input type="text" data-bind="value: sobrenome" /><br/>
+    Twitter?: <input type="checkbox" data-bind="checked: onTwitter" />
+    <input type="text" data-bind="visible: onTwitter, value: twitter" placeholder="@username"/><br/>
+    <p>Nome completo: <span data-bind="html: nome()+sobrenome()"></span></p>
+    <button data-bind="click: submit">Enviar</button>
+            </div>
+        </section>
+        <section class="slide">
+            <h2>Knockout.js</h2>
+            <ul>
+            	<li class="slide">Bindings nativos: text, visible, html, css, style, attr;</li>
+            	<li class="slide">Controle de fluxo: foreach, if, ifnot, with;</li>
+            	<li class="slide">Bindings de form: click, event, submit, enable, disable, value, hasfocus, checked,
+                options, selectedOptions, uniqueName;</li>
+            	<li class="slide">Renderização de templates;</li>
+            	<li class="slide">Abordagem mais centrada no modelo de objetos do JS.</li>
+            </ul>
+            <textarea class="code" mode="javascript" style="display:none" runnable="true" globals="ko">
+function Pessoa(){
+    this.nome = '';
+    this.sobrenome = '';
+    this.twitter = '';
+    this.telefones = [];
+}
+var viewModel = function() {
+    var pessoa = new Pessoa();
+    this.nome = ko.computed({
+        read: function(){
+           console.warn(pessoa);
+           return pessoa.nome; 
+        },
+        write: function(value){
+            if (value.length < 3){
+                alert('Nome nao pode ter menos de 3 chars');
+                return false;
+            }
+            pessoa.nome = value;
+            console.warn(pessoa);
+            return this;
+        },
+        owner:this
+    });
+    this.sobrenome = ko.observable('');
+    this.nome_completo = ko.computed({read: function(){ return pessoa.nome }});
+    this.onTwitter = ko.observable(false);
+    this.twitter = ko.observable('');
+    this.submit = function(){
+        alert(JSON.stringify(ko.toJS(pessoa)));
+    }.bind(this);
+};
+            </textarea>
         </section>
         <section class="slide">
             <h2>Créditos das imagens</h2>
             <ul>
                 <li>http://www.flickr.com/photos/9036026@N08/3010859705/</li>
                 <li>http://www.flickr.com/photos/joecrimmings/2238699461/</li>
+                <li>http://www.flickr.com/photos/35555684@N00/2574208762/</li>
+                <li>http://zinganobjj.com/black-house-mma-wins-gym-of-the-year-award-at-the-2011-mma-awards-show/</li>
             </ul>
         </section>
         <script type="text/javascript" src="js/jquery.js"></script>
+        <script type="text/javascript" src="js/knockout-2.0.0.js"></script>
         <script type="text/javascript" src="js/underscore.js"></script>
         <script type="text/javascript" src="js/backbone.js"></script>
         <script src="js/deck.js/core/deck.core.js"></script>
@@ -398,6 +509,7 @@ var DocumentRow = Backbone.View.extend({
         <script src="js/deck.js/extensions/navigation/deck.navigation.js"></script>
         <script src="js/deck.js/extensions/deck.js-codemirror/codemirror.js"></script>
         <script src="js/deck.js/extensions/deck.js-codemirror/mode/javascript/javascript.js"></script>
+        <script src="js/deck.js/extensions/deck.js-codemirror/mode/htmlmixed/htmlmixed.js"></script>
         <script src="js/deck.js/extensions/deck.js-codemirror/mode/xml/xml.js"></script>
         <script src="js/deck.js/extensions/deck.js-codemirror/mode/css/css.js"></script>
         <script src="js/deck.js/extensions/deck.js-codemirror/mode/htmlmixed/htmlmixed.js"></script>
@@ -407,6 +519,17 @@ var DocumentRow = Backbone.View.extend({
             $(document).ready(function(){
                 $.deck('.slide');
             });
+
+            var viewModel = {
+                nome: ko.observable(''),
+                sobrenome: ko.observable(''),
+                onTwitter: ko.observable(false),
+                twitter: ko.observable(''),
+                submit: function(){
+                    alert(JSON.stringify(ko.toJS(viewModel)));
+                }.bind(this)
+            };
+            ko.applyBindings(viewModel, document.getElementById('ko-exemplo1'));
         </script>
     </body>
 </html>
