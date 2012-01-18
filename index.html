@@ -453,40 +453,54 @@ var viewModel = {
             	<li class="slide">Renderização de templates;</li>
             	<li class="slide">Abordagem mais centrada no modelo de objetos do JS.</li>
             </ul>
+        </section>
+        <section class="slide">
             <textarea class="code" mode="javascript" style="display:none" runnable="true" globals="ko">
 function Pessoa(){
-    this.nome = '';
-    this.sobrenome = '';
-    this.twitter = '';
-    this.telefones = [];
-}
-var viewModel = function() {
-    var pessoa = new Pessoa();
-    this.nome = ko.computed({
-        read: function(){
-           console.warn(pessoa);
-           return pessoa.nome; 
-        },
-        write: function(value){
-            if (value.length < 3){
-                alert('Nome nao pode ter menos de 3 chars');
-                return false;
-            }
-            pessoa.nome = value;
-            console.warn(pessoa);
-            return this;
-        },
-        owner:this
-    });
+    this.nome = ko.observable('');
     this.sobrenome = ko.observable('');
-    this.nome_completo = ko.computed({read: function(){ return pessoa.nome }});
-    this.onTwitter = ko.observable(false);
-    this.twitter = ko.observable('');
-    this.submit = function(){
-        alert(JSON.stringify(ko.toJS(pessoa)));
+    this.twitter = ko.observable('')
+    this.telefones = ko.observableArray();
+}
+var PessoaViewModel = function() {
+    this.pessoas= ko.observableArray();
+    this.nome= ko.observable('');
+    this.sobrenome= ko.observable('');
+    this.twitter= ko.observable('');
+    this.onTwitter= ko.observable(false);
+    this.adicionar= function(){
+        var p = new Pessoa();
+        p.nome(this.nome());
+        p.sobrenome(this.sobrenome());
+        if (this.onTwitter())
+            p.twitter(this.twitter());
+        this.pessoas.push(p);
     }.bind(this);
-};
+    this.remover = function(value){
+        this.pessoas.remove(value);
+        return false;
+    }.bind(this);
+}
+var pessoas_view_model = new PessoaViewModel();
             </textarea>
+            <textarea class="code" mode="html" style="display:none" runnable="true">
+<ul data-bind="foreach: pessoas">
+    <li><span data-bind="text: nome_completo()"></span>
+    <button data-bind="click: $parent.remover.bind($data)">Remover</button>
+</ul>
+            </textarea>
+            <div id="ko-exemplo2">
+    Nome: <input type="text" data-bind="value: nome" /><br/>
+    Sobrenome: <input type="text" data-bind="value: sobrenome" /><br/>
+    Twitter?: <input type="checkbox" data-bind="checked: onTwitter" />
+    <input type="text" data-bind="visible: onTwitter, value: twitter" placeholder="@username"/><br/>
+    <p>Nome completo: <span data-bind="html: nome()+' '+sobrenome()"></span></p>
+    <button data-bind="click: adicionar">Adicionar</button>
+    <ul data-bind="foreach: pessoas">
+        <li><span data-bind="text: nome()"></span>
+        <button data-bind="click: $parent.remover.bind($data)">Remover</button>
+    </ul>
+            </div>
         </section>
         <section class="slide">
             <h2>Créditos das imagens</h2>
@@ -526,10 +540,43 @@ var viewModel = function() {
                 onTwitter: ko.observable(false),
                 twitter: ko.observable(''),
                 submit: function(){
-                    alert(JSON.stringify(ko.toJS(viewModel)));
+                    alert(JSON.stringify(pko.toJS(viewModel)));
                 }.bind(this)
-            };
+            };             
             ko.applyBindings(viewModel, document.getElementById('ko-exemplo1'));
+            function Pessoa(){
+                this.nome = ko.observable('');
+                this.sobrenome = ko.observable('');
+                this.twitter = ko.observable('')
+                this.telefones = ko.observableArray();
+            }
+            function Pessoa(){
+                this.nome = ko.observable('');
+                this.sobrenome = ko.observable('');
+                this.twitter = ko.observable('')
+                this.telefones = ko.observableArray();
+            }
+            var PessoaViewModel = function() {
+                this.pessoas= ko.observableArray();
+                this.nome= ko.observable('');
+                this.sobrenome= ko.observable('');
+                this.twitter= ko.observable('');
+                this.onTwitter= ko.observable(false);
+                this.adicionar= function(){
+                    var p = new Pessoa();
+                    p.nome(this.nome());
+                    p.sobrenome(this.sobrenome());
+                    if (this.onTwitter())
+                        p.twitter(this.twitter());
+                    this.pessoas.push(p);
+                }.bind(this);
+                this.remover = function(value){
+                    this.pessoas.remove(value);
+                    return false;
+                }.bind(this);
+            }
+            var pessoas_view_model = new PessoaViewModel();
+            ko.applyBindings(pessoas_view_model, document.getElementById('ko-exemplo2'));
         </script>
     </body>
 </html>
