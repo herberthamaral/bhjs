@@ -533,51 +533,9 @@ var pessoas_view_model = new PessoaViewModel();
             $(document).ready(function(){
                 $.deck('.slide');
             });
-
-            var viewModel = {
-                nome: ko.observable(''),
-                sobrenome: ko.observable(''),
-                onTwitter: ko.observable(false),
-                twitter: ko.observable(''),
-                submit: function(){
-                    alert(JSON.stringify(pko.toJS(viewModel)));
-                }.bind(this)
-            };             
-            ko.applyBindings(viewModel, document.getElementById('ko-exemplo1'));
-            function Pessoa(){
-                this.nome = ko.observable('');
-                this.sobrenome = ko.observable('');
-                this.twitter = ko.observable('')
-                this.telefones = ko.observableArray();
-            }
-            function Pessoa(){
-                this.nome = ko.observable('');
-                this.sobrenome = ko.observable('');
-                this.twitter = ko.observable('')
-                this.telefones = ko.observableArray();
-            }
-            var PessoaViewModel = function() {
-                this.pessoas= ko.observableArray();
-                this.nome= ko.observable('');
-                this.sobrenome= ko.observable('');
-                this.twitter= ko.observable('');
-                this.onTwitter= ko.observable(false);
-                this.adicionar= function(){
-                    var p = new Pessoa();
-                    p.nome(this.nome());
-                    p.sobrenome(this.sobrenome());
-                    if (this.onTwitter())
-                        p.twitter(this.twitter());
-                    this.pessoas.push(p);
-                }.bind(this);
-                this.remover = function(value){
-                    this.pessoas.remove(value);
-                    return false;
-                }.bind(this);
-            }
-            var pessoas_view_model = new PessoaViewModel();
-            ko.applyBindings(pessoas_view_model, document.getElementById('ko-exemplo2'));
         </script>
+        <script src="js/ko_exemplo1.js"></script>
+        <script src="js/ko_exemplo2.js"></script>
     </body>
 </html>
 
