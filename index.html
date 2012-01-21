@@ -99,7 +99,7 @@ $(document).ready(function(){
             <h2>Algumas implicações.</h2>
             <ul>
                 <li class="slide">Código macarrônico;</li>
-                <li class="slide">Complexidade/manutenabilidade do código cresce em proporção <strong>geométrica</strong> enquanto a
+                <li class="slide">Complexidade do código cresce em proporção <strong>geométrica</strong> enquanto a
                 complexidade das interações cresce em proporção <strong>aritimética</strong>;</li>
                 <li class="slide">Número gigantesco de <strong>WTF/min</strong> (métrica internacionalmente conhecida para avaliação de
                 qualidade de código);</li>
@@ -267,7 +267,7 @@ var DocumentRow = Backbone.View.extend({
         "click .button.delete": "destroy"
     },
     initialize:function(){
-        _.bindAll(this, "render");
+        _.bindAll(this);
         this.model.bind('change', this.render);
     }
     render: function() {
@@ -413,7 +413,6 @@ var DocumentRow = Backbone.View.extend({
         		<li class="slide">Escrita em JavaScript puro;</li>
         		<li class="slide">Curva de adoção extremamente pequena; Independende da sua arquitetura atual, o ko
                 encaixa-se sem problemas;</li>
-        		<li class="slide">Escrita em JavaScript puro;</li>
         		<li class="slide">Rastreamento de dependências bem elegante;</li>
         		<li class="slide">Vínculos declarativos;</li>
         	</ul>
